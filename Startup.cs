@@ -58,9 +58,11 @@ namespace ODataWebApiAspNetCore
         {
             var builder = new ODataConventionModelBuilder();
             builder.EntitySet<Company>("Companies");
-            builder.EntitySet<Employee>("Employees");
+            var employeesBuilder = builder.EntitySet<Employee>("Employees");
             builder.EntitySet<Practice>("Practices");
             builder.EntitySet<Project>("Projects");
+
+            employeesBuilder.EntityType.Property(p => p.FirstName).Name = "Name";
             return builder.GetEdmModel();
         }
     }
