@@ -7,61 +7,60 @@ using System.Threading.Tasks;
 
 namespace ODataWebApiAspNetCore.Controllers
 {
-    public class EmployeesController : BaseController<Employee>
+    public class ProjectController : BaseController<Project>
     {
         private readonly ODataDbContext _context;
 
-        public EmployeesController(ODataDbContext context)
+        public ProjectController(ODataDbContext context)
         {
             _context = context;
         }
 
-        [ODataRoute("Employees")]
         [EnableQuery]
+        [ODataRoute("Projects")]
         //[QueryValidator1()]
         public IActionResult GetItems()
         {
-            return GetAll(_context.Employee);
+            return GetAll(_context.Project);
         }
 
-        [ODataRoute("Employees({key})")]
         [EnableQuery]
+        [ODataRoute("Projects({key})")]
         public IActionResult GetItem(Guid key)
         {
-            return GetItem(_context.Employee, t => t.Id == key);
+            return GetItem(_context.Project, t => t.Id == key);
         }
 
-        [ODataRoute("Employees")]
+        [ODataRoute("Projects")]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Employee obj)
+        public async Task<IActionResult> Post([FromBody] Project obj)
         {
             obj.Id = Guid.NewGuid();
             return await PostItemAsync(obj, _context);
         }
 
-        [ODataRoute("Employees({key})")]
+        [ODataRoute("Projects({key})")]
         [HttpPatch]
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public async Task<IActionResult> Patch([FromODataUri] Guid key, Delta<Employee> obj)
+        public async Task<IActionResult> Patch([FromODataUri] Guid key, Delta<Project> obj)
         {
-            return await PatchItemAsync(key, obj, _context.Employee, _context, t => t.Id == key);
+            return await PatchItemAsync(key, obj, _context.Project, _context, t => t.Id == key);
         }
 
-        [ODataRoute("Employees({key})")]
+        [ODataRoute("Projects({key})")]
         [HttpPut]
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
-        public async Task<IActionResult> Put([FromODataUri] Guid key, Employee obj)
+        public async Task<IActionResult> Put([FromODataUri] Guid key, Project obj)
         {
-            return await PutItemAsync(obj, _context, t => t.Id == key, _context.Employee);
+            return await PutItemAsync(obj, _context, t => t.Id == key, _context.Project);
         }
 
-
-        [ODataRoute("Employees({key})")]
+        [ODataRoute("Projects({key})")]
         [HttpDelete]
         //[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.All)]
         public async Task<IActionResult> Delete([FromODataUri] Guid key)
         {
-            return await DeleteItemAsync(key, _context.Employee, _context);
+            return await DeleteItemAsync(key, _context.Project, _context);
         }
     }
 }
