@@ -5,6 +5,11 @@ namespace ODataWebApiAspNetCore.Models
 {
     public partial class Employee
     {
+        public Employee()
+        {
+            EmployeeProject = new HashSet<EmployeeProject>();
+        }
+
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -16,5 +21,6 @@ namespace ODataWebApiAspNetCore.Models
 
         public virtual Company Company { get; set; }
         public virtual Practice Practice { get; set; }
+        public virtual ICollection<EmployeeProject> EmployeeProject { get; set; }
     }
 }

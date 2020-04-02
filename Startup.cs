@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OData.Edm;
 using ODataWebApiAspNetCore.Models;
 
 namespace ODataWebApiAspNetCore
@@ -22,9 +24,12 @@ namespace ODataWebApiAspNetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<ODataDbContext>(options => options.UseSqlServer(Configuration["ODataDb"]));
             services.AddOData();
+            services.AddMvc(options =>
+            {
+                options.EnableEndpointRouting = false;
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +50,18 @@ namespace ODataWebApiAspNetCore
             {
                 routeBuilder.EnableDependencyInjection();
                 routeBuilder.Select().OrderBy().Filter().Expand().MaxTop(100).Count().SkipToken();
+                routeBuilder.MapODataServiceRoute("odata", "odata", GetEdmModel());
             });
+        }
+
+        private static IEdmModel GetEdmModel()
+        {
+            var builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Company>("Companies");
+            builder.EntitySet<Employee>("Employees");
+            builder.EntitySet<Practice>("Practices");
+            builder.EntitySet<Project>("Projects");
+            return builder.GetEdmModel();
         }
     }
 }

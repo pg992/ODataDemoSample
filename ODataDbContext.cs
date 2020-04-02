@@ -17,7 +17,9 @@ namespace ODataWebApiAspNetCore.Models
 
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<EmployeeProject> EmployeeProject { get; set; }
         public virtual DbSet<Practice> Practice { get; set; }
+        public virtual DbSet<Project> Project { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -77,6 +79,23 @@ namespace ODataWebApiAspNetCore.Models
                     .HasConstraintName("FK_Employee_Practice");
             });
 
+            modelBuilder.Entity<EmployeeProject>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.EmployeeProject)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_EmployeeProject_Employee");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.EmployeeProject)
+                    .HasForeignKey(d => d.ProjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_EmployeeProject_Project");
+            });
+
             modelBuilder.Entity<Practice>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
@@ -84,6 +103,21 @@ namespace ODataWebApiAspNetCore.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Project>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Industry)
+                    .IsRequired()
+                    .HasMaxLength(70)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(70)
                     .IsUnicode(false);
             });
         }

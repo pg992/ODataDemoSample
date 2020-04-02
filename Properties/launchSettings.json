@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/employee",
+      "launchUrl": "odata/Employees",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "ODataWebApiAspNetCore": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/employee",
+      "launchUrl": "odata/Employees",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
