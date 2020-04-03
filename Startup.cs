@@ -49,7 +49,7 @@ namespace ODataWebApiAspNetCore
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.EnableDependencyInjection();
-                routeBuilder.Select().OrderBy().Filter().Expand().MaxTop(100).Count().SkipToken();
+                routeBuilder.Select().OrderBy().Filter().Expand().MaxTop(100).Count();//.SkipToken();
                 routeBuilder.MapODataServiceRoute("odata", "odata", GetEdmModel());
             });
         }
@@ -58,11 +58,16 @@ namespace ODataWebApiAspNetCore
         {
             var builder = new ODataConventionModelBuilder();
             builder.EntitySet<Company>("Companies");
-            var employeesBuilder = builder.EntitySet<Employee>("Employees");
+            builder.EntitySet<Employee>("Employees");
             builder.EntitySet<Practice>("Practices");
             builder.EntitySet<Project>("Projects");
 
-            employeesBuilder.EntityType.Property(p => p.FirstName).Name = "Name";
+            var cu = builder.StructuralTypes.First(t => t.ClrType == typeof(Employee));
+            cu.AddProperty(typeof(Employee).GetProperty("FullName"));
+            var employee = builder.EntityType<Employee>();
+
+            //employee.Ignore(t => t.FullName);
+            //employeesBuilder.EntityType.Property(p => p.FirstName).Name = "Name";
             return builder.GetEdmModel();
         }
     }

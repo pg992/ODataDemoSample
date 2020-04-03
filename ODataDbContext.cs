@@ -20,6 +20,7 @@ namespace ODataWebApiAspNetCore.Models
         public virtual DbSet<EmployeeProject> EmployeeProject { get; set; }
         public virtual DbSet<Practice> Practice { get; set; }
         public virtual DbSet<Project> Project { get; set; }
+        public virtual DbSet<Title> Title { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -77,6 +78,11 @@ namespace ODataWebApiAspNetCore.Models
                     .WithMany(p => p.Employee)
                     .HasForeignKey(d => d.PracticeId)
                     .HasConstraintName("FK_Employee_Practice");
+
+                entity.HasOne(d => d.Title)
+                    .WithMany(p => p.Employee)
+                    .HasForeignKey(d => d.TitleId)
+                    .HasConstraintName("FK_Employee_Title");
             });
 
             modelBuilder.Entity<EmployeeProject>(entity =>
@@ -119,6 +125,17 @@ namespace ODataWebApiAspNetCore.Models
                     .IsRequired()
                     .HasMaxLength(70)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Title>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasConversion(v => v.ToString(),
+                    v => (Position)Enum.Parse(typeof(Position), v));
             });
         }
     }
