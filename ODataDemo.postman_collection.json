@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "7d66aa93-c457-43c3-904c-f2f2974e1cf3",
+		"name": "ODataDemo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AspNetCoreWebApi",
+			"item": [
+				{
+					"name": "GetEmployees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/employee",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"employee"
+							],
+							"query": [
+								{
+									"key": "$select",
+									"value": "FirstName, LastName, Address",
+									"disabled": true
+								},
+								{
+									"key": "$expand",
+									"value": "Practice($select=Name)",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetODataEmployees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/odata/Employees?$select=FullName&$expand=Title",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"odata",
+								"Employees"
+							],
+							"query": [
+								{
+									"key": "$select",
+									"value": "FullName"
+								},
+								{
+									"key": "$expand",
+									"value": "Company($expand=Employee($filter=FirstName eq 'Petar'))",
+									"disabled": true
+								},
+								{
+									"key": "$filter",
+									"value": "Company/Employee/any(Employee: endsWith(FirstName, 'ar'))",
+									"disabled": true
+								},
+								{
+									"key": "$skip",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "$top",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "$orderBy",
+									"value": "FirstName desc",
+									"disabled": true
+								},
+								{
+									"key": "$count",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "$search",
+									"value": "Dimitar",
+									"disabled": true
+								},
+								{
+									"key": "$filter",
+									"value": "Title/Name eq ODataWebApiAspNetCore.Models.Position'SrTechnicalConsultant'",
+									"disabled": true
+								},
+								{
+									"key": "$expand",
+									"value": "Title"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetODataEmployee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/odata/Employees(6c1273f5-02d0-4b69-9be4-6c8f87ab8950)/Company/$ref",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"odata",
+								"Employees(6c1273f5-02d0-4b69-9be4-6c8f87ab8950)",
+								"Company",
+								"$ref"
+							],
+							"query": [
+								{
+									"key": "$expand",
+									"value": "Company",
+									"disabled": true
+								},
+								{
+									"key": "$select",
+									"value": "value",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateEmployee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": \"e0859df2-3045-419f-9963-73edf7144419\",\r\n    \"FirstName\": \"Test\",\r\n    \"LastName\": \"Test\",\r\n    \"Address\": \"Jablanica 20\",\r\n    \"Height\": 160,\r\n    \"Weight\": 60,\r\n    \"CompanyId\": \"b61b6d10-b806-4d58-8ebc-3a64aaa10bf7\",\r\n    \"PracticeId\": \"053f77df-50c5-4691-bad6-78b86ab1aac2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/odata/Employees",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"odata",
+								"Employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateEmployee",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Address\": \"Vlatko Milenkoski 57\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/odata/Employees/fe8c1374-00db-462d-ab67-be9ccd41369a",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"odata",
+								"Employees",
+								"fe8c1374-00db-462d-ab67-be9ccd41369a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEmployee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/odata/Employees/20b4884f-8c40-4cbc-b5a9-a5b998ab3066",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"odata",
+								"Employees",
+								"20b4884f-8c40-4cbc-b5a9-a5b998ab3066"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
