@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "7d66aa93-c457-43c3-904c-f2f2974e1cf3",
-		"name": "ODataDemo",
+		"_postman_id": "196da315-73ca-456d-a8b6-6e0219d02b6d",
+		"name": "ODataDemo copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -9,44 +9,12 @@
 			"name": "AspNetCoreWebApi",
 			"item": [
 				{
-					"name": "GetEmployees",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:5001/api/employee",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "5001",
-							"path": [
-								"api",
-								"employee"
-							],
-							"query": [
-								{
-									"key": "$select",
-									"value": "FirstName, LastName, Address",
-									"disabled": true
-								},
-								{
-									"key": "$expand",
-									"value": "Practice($select=Name)",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "GetODataEmployees",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:5001/odata/Employees?$select=FullName&$expand=Title",
+							"raw": "https://localhost:5001/odata/Employees?$expand=Title",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -59,7 +27,8 @@
 							"query": [
 								{
 									"key": "$select",
-									"value": "FullName"
+									"value": "FullName",
+									"disabled": true
 								},
 								{
 									"key": "$expand",
@@ -116,7 +85,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:5001/odata/Employees(6c1273f5-02d0-4b69-9be4-6c8f87ab8950)/Company/$ref",
+							"raw": "https://localhost:5001/odata/Employees(6c1273f5-02d0-4b69-9be4-6c8f87ab8950)",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -124,16 +93,9 @@
 							"port": "5001",
 							"path": [
 								"odata",
-								"Employees(6c1273f5-02d0-4b69-9be4-6c8f87ab8950)",
-								"Company",
-								"$ref"
+								"Employees(6c1273f5-02d0-4b69-9be4-6c8f87ab8950)"
 							],
 							"query": [
-								{
-									"key": "$expand",
-									"value": "Company",
-									"disabled": true
-								},
 								{
 									"key": "$select",
 									"value": "value",
@@ -151,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\": \"e0859df2-3045-419f-9963-73edf7144419\",\r\n    \"FirstName\": \"Test\",\r\n    \"LastName\": \"Test\",\r\n    \"Address\": \"Jablanica 20\",\r\n    \"Height\": 160,\r\n    \"Weight\": 60,\r\n    \"CompanyId\": \"b61b6d10-b806-4d58-8ebc-3a64aaa10bf7\",\r\n    \"PracticeId\": \"053f77df-50c5-4691-bad6-78b86ab1aac2\"\r\n}",
+							"raw": "{\r\n    \"Id\": \"e0859df2-3045-419f-9963-73edf7144419\",\r\n    \"FirstName\": \"Test1\",\r\n    \"LastName\": \"Test\",\r\n    \"Address\": \"Jablanica 20\",\r\n    \"Height\": 160,\r\n    \"Weight\": 60,\r\n    \"CompanyId\": \"b61b6d10-b806-4d58-8ebc-3a64aaa10bf7\",\r\n    \"PracticeId\": \"053f77df-50c5-4691-bad6-78b86ab1aac2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
